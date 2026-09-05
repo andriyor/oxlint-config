@@ -5,13 +5,20 @@ Shared [oxlint](https://oxc.rs) config for TypeScript projects, in composable pi
 ## Install
 
 ```sh
-pnpm add -D github:andriyor/oxlint-config oxlint
+pnpm add -D github:andriyor/oxlint-config oxlint oxlint-tsgolint
 ```
 
 The linter plugins (`@e18e/eslint-plugin`, `@tanstack/eslint-plugin-query`,
 `eslint-plugin-react-you-might-not-need-an-effect`) and `oxlint-config-presets`
 are dependencies of this package — you do **not** need to install them
 yourself, even under pnpm's non-hoisted layout.
+
+`oxlint-tsgolint` is a peer dependency: `base` extends
+`@typescript-eslint/recommended-type-checked`, which turns on type-aware linting
+(`options.typeAware`) and needs the tsgolint binary. It is inherited through
+`extends`, so consumers get it with no flag. It resolves types from the nearest
+`tsconfig.json`; without one, imports from uninstalled packages type as `error`
+and trip the `no-unsafe-*` rules.
 
 ## Use
 
@@ -41,7 +48,7 @@ export default defineConfig({
 | entry point | contents |
 | --- | --- |
 | `@andriyor/oxlint-config` | same as `/base` |
-| `@andriyor/oxlint-config/base` | `@eslint/recommended`, `@typescript-eslint/recommended`, `@e18e`, `import/no-relative-parent-imports`, `oxc/no-barrel-file`, the `no-redeclare` override |
+| `@andriyor/oxlint-config/base` | `@eslint/recommended`, `@typescript-eslint/recommended-type-checked`, `@e18e`, `import/no-relative-parent-imports`, `oxc/no-barrel-file`, the `no-redeclare` override |
 | `@andriyor/oxlint-config/react` | `react-hooks`, `react-refresh/vite`, `@tanstack/query`, `react-you-might-not-need-an-effect`, `react/*` rules, the `.tsx` `max-lines-per-function` override |
 | `@andriyor/oxlint-config/vitest` | `@vitest/recommended`, scoped to `**/*.{spec,test}.{ts,tsx}` |
 

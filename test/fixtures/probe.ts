@@ -7,3 +7,7 @@ var dup = 2;
 export { dup };
 
 export const spread = (it: Iterable<number>) => Array.from(it);
+
+export function fireAndForget() {
+  Promise.resolve(1);
+}

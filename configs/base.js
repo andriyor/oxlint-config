@@ -1,6 +1,6 @@
 import { defineConfig } from "oxlint";
 import eslintRecommended from "oxlint-config-presets/@eslint/recommended.json" with { type: "json" };
-import tsRecommended from "oxlint-config-presets/@typescript-eslint/recommended.json" with { type: "json" };
+import tsRecommended from "oxlint-config-presets/@typescript-eslint/recommended-type-checked.json" with { type: "json" };
 import e18e from "@e18e/eslint-plugin";
 import { preset } from "../preset.js";
 

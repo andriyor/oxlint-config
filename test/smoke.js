@@ -7,8 +7,9 @@ import assert from "node:assert/strict";
 
 const BASE = [
   "eslint(no-debugger)", // @eslint/recommended
-  "typescript(no-explicit-any)", // @typescript-eslint/recommended
+  "typescript(no-explicit-any)", // @typescript-eslint/recommended-type-checked
   "eslint(no-redeclare)", // our **/*.{ts,tsx} override, re-enabled on purpose
+  "typescript(no-floating-promises)", // @typescript-eslint/recommended-type-checked, via oxlint-tsgolint
   "e18e(prefer-spread-syntax)", // @e18e/eslint-plugin
 ];
 const REACT = [
