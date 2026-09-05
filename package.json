@@ -1,0 +1,31 @@
+{
+  "name": "@andriyor/oxlint-config",
+  "version": "0.1.0",
+  "description": "Shared oxlint config for React + TypeScript + Vitest projects",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andriyor/oxlint-config.git"
+  },
+  "exports": "./oxlint.config.js",
+  "files": [
+    "oxlint.config.js"
+  ],
+  "scripts": {
+    "test": "node test/smoke.js"
+  },
+  "dependencies": {
+    "@e18e/eslint-plugin": "^0.8.0",
+    "@tanstack/eslint-plugin-query": "^5.101.4",
+    "eslint-plugin-react-you-might-not-need-an-effect": "^1.0.1",
+    "oxlint-config-presets": "^0.1.19"
+  },
+  "peerDependencies": {
+    "oxlint": "^1.81.0"
+  },
+  "devDependencies": {
+    "oxlint": "^1.81.0"
+  },
+  "packageManager": "pnpm@12.3.1"
+}
