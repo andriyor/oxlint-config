@@ -4,7 +4,27 @@ import tsRecommended from "oxlint-config-presets/@typescript-eslint/recommended.
 import e18e from "@e18e/eslint-plugin";
 import { preset } from "../preset.js";
 
-/** TypeScript + general JS rules. No React, no test runner. */
+// This package must ship .js, not .ts: Node refuses to strip types for files
+// under node_modules (ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING), so a
+// consumer importing a .ts config from here fails to load.
+//
+// TODO: oxlint is adding opt-in `recommended` presets (exported config objects
+// importable from "oxlint"). Once shipped, the oxlint-config-presets dependency
+// can be dropped in favour of the built-in ones.
+// Watch https://github.com/oxc-project/oxc/issues/20758
+//
+// TODO: oxlint only lints JS/TS today. Once JSON and YAML files are supported,
+// they can be linted here too instead of needing a separate tool.
+// Watch https://github.com/oxc-project/oxc/issues/18656
+
+/**
+ * TypeScript + general JS rules. No React, no test runner. This is the default
+ * export of the package.
+ *
+ * `env` and `ignorePatterns` only take effect when this config is spread
+ * (`defineConfig(base)`) — oxlint does not inherit either one through
+ * `extends`, so anything composing fragments declares them itself.
+ */
 export default defineConfig({
   plugins: ["typescript", "import", "oxc"],
   jsPlugins: ["@e18e/eslint-plugin"],
@@ -12,6 +32,8 @@ export default defineConfig({
   // categories other than `correctness`.
   extends: [eslintRecommended, tsRecommended],
   categories: { correctness: "error" },
+  env: { builtin: true, es2020: true },
+  ignorePatterns: ["dist"],
   rules: {
     // not covered by any preset above
     "import/no-relative-parent-imports": "error",

@@ -1,7 +1,7 @@
 {
   "name": "@andriyor/oxlint-config",
-  "version": "0.2.0",
-  "description": "Shared oxlint config for React + TypeScript + Vitest projects",
+  "version": "0.3.0",
+  "description": "Shared oxlint config for TypeScript projects, composable base / react / vitest",
   "type": "module",
   "license": "MIT",
   "repository": {
@@ -11,7 +11,7 @@
   "exports": {
     ".": {
       "types": "./config.d.ts",
-      "default": "./oxlint.config.js"
+      "default": "./configs/base.js"
     },
     "./base": {
       "types": "./config.d.ts",
@@ -27,7 +27,6 @@
     }
   },
   "files": [
-    "oxlint.config.js",
     "configs",
     "preset.js",
     "config.d.ts"

@@ -18,7 +18,8 @@ const REACT = [
 const VITEST = ["vitest(no-disabled-tests)"];
 
 const SCENARIOS = [
-  { config: "oxlint.config.ts", present: [...BASE, ...REACT, ...VITEST], absent: [] },
+  { config: "full.config.ts", present: [...BASE, ...REACT, ...VITEST], absent: [] },
+  { config: "default.config.ts", present: BASE, absent: [...REACT, ...VITEST] },
   { config: "base.config.ts", present: BASE, absent: [...REACT, ...VITEST] },
   { config: "base-vitest.config.ts", present: [...BASE, ...VITEST], absent: REACT },
 ];

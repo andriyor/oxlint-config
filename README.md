@@ -15,22 +15,24 @@ yourself, even under pnpm's non-hoisted layout.
 
 ## Use
 
-For a React + Vitest project, take the whole thing:
+The default export is **base only** — TypeScript and general JS rules, nothing
+project-type specific. For a plain TypeScript or Node project that is the whole
+config:
 
 ```ts
 // oxlint.config.ts
-import shared from "@andriyor/oxlint-config";
+import base from "@andriyor/oxlint-config";
 import { defineConfig } from "oxlint";
 
-export default defineConfig(shared);
+export default defineConfig(base);
 ```
 
 To adjust a rule, spread and override:
 
 ```ts
 export default defineConfig({
-  ...shared,
-  rules: { ...shared.rules, "oxc/no-barrel-file": "off" },
+  ...base,
+  rules: { ...base.rules, "oxc/no-barrel-file": "off" },
 });
 ```
 
@@ -38,28 +40,32 @@ export default defineConfig({
 
 | entry point | contents |
 | --- | --- |
-| `@andriyor/oxlint-config` | `base` + `react` + `vitest`, plus `env` and `ignorePatterns` |
+| `@andriyor/oxlint-config` | same as `/base` |
 | `@andriyor/oxlint-config/base` | `@eslint/recommended`, `@typescript-eslint/recommended`, `@e18e`, `import/no-relative-parent-imports`, `oxc/no-barrel-file`, the `no-redeclare` override |
 | `@andriyor/oxlint-config/react` | `react-hooks`, `react-refresh/vite`, `@tanstack/query`, `react-you-might-not-need-an-effect`, `react/*` rules, the `.tsx` `max-lines-per-function` override |
 | `@andriyor/oxlint-config/vitest` | `@vitest/recommended`, scoped to `**/*.{spec,test}.{ts,tsx}` |
 
-A Node project with tests but no React:
+A React + Vitest project:
 
 ```ts
-import base from "@andriyor/oxlint-config/base";
+import base from "@andriyor/oxlint-config";
+import react from "@andriyor/oxlint-config/react";
 import vitest from "@andriyor/oxlint-config/vitest";
 import { defineConfig } from "oxlint";
 
 export default defineConfig({
-  extends: [base, vitest],
+  extends: [base, react, vitest],
   plugins: [],
-  env: { builtin: true, es2020: true },
+  env: { builtin: true, browser: true, es2020: true },
+  ignorePatterns: ["dist"],
 });
 ```
 
 Two things that bite when composing:
 
-- **`env` is not inherited through `extends`.** Declare it yourself. (`rules`,
+- **Neither `env` nor `ignorePatterns` is inherited through `extends`.** Declare
+  them yourself — that is why the example above repeats them, and why they only
+  do anything in `base` when you spread it rather than extend it. (`rules`,
   `plugins`, `overrides`, `jsPlugins` and `categories` *are* inherited, despite
   the docs listing only the first three.)
 - **Omitting `plugins` adds oxlint's default plugins on top** of whatever the
