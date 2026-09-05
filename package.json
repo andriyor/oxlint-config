@@ -1,6 +1,6 @@
 {
   "name": "@andriyor/oxlint-config",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Shared oxlint config for React + TypeScript + Vitest projects",
   "type": "module",
   "license": "MIT",
@@ -10,13 +10,27 @@
   },
   "exports": {
     ".": {
-      "types": "./oxlint.config.d.ts",
+      "types": "./config.d.ts",
       "default": "./oxlint.config.js"
+    },
+    "./base": {
+      "types": "./config.d.ts",
+      "default": "./configs/base.js"
+    },
+    "./react": {
+      "types": "./config.d.ts",
+      "default": "./configs/react.js"
+    },
+    "./vitest": {
+      "types": "./config.d.ts",
+      "default": "./configs/vitest.js"
     }
   },
   "files": [
     "oxlint.config.js",
-    "oxlint.config.d.ts"
+    "configs",
+    "preset.js",
+    "config.d.ts"
   ],
   "scripts": {
     "test": "node test/smoke.js"
