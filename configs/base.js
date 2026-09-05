@@ -24,9 +24,18 @@ import { preset } from "../preset.js";
  * `env` and `ignorePatterns` only take effect when this config is spread
  * (`defineConfig(base)`) — oxlint does not inherit either one through
  * `extends`, so anything composing fragments declares them itself.
+ *
+ * TODO: once oxlint inherits them, composing consumers can drop their own
+ * copies of both fields.
+ * Watch https://github.com/oxc-project/oxc/issues/20087 (env)
+ * and https://github.com/oxc-project/oxc/issues/16079 (ignorePatterns)
  */
 export default defineConfig({
   plugins: ["typescript", "import", "oxc"],
+  // TODO: jsPlugins can only be named by import specifier, so this package
+  // cannot hand oxlint the plugin object it already imported. Once plugins can
+  // be passed by reference, these strings can go.
+  // Watch https://github.com/oxc-project/oxc/issues/23944
   jsPlugins: ["@e18e/eslint-plugin"],
   // Ports of the ESLint recommended presets, whose rules oxlint files under
   // categories other than `correctness`.
@@ -44,6 +53,10 @@ export default defineConfig({
     {
       // @typescript-eslint/recommended disables this for TS files (tsc catches
       // it); an override is the only way to win against the extended one.
+      //
+      // TODO: once an extending config's own `rules` beat an extended config's
+      // `overrides`, this moves back up into `rules` above.
+      // Watch https://github.com/oxc-project/oxc/issues/20067
       files: ["**/*.{ts,tsx}"],
       rules: { "no-redeclare": "error" },
     },

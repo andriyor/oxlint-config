@@ -8,6 +8,8 @@ import { preset } from "../preset.js";
 /** React rules. Layer on top of ./base.js. */
 export default defineConfig({
   plugins: ["react"],
+  // TODO: named by specifier rather than by reference, see the note in base.js.
+  // Watch https://github.com/oxc-project/oxc/issues/23944
   jsPlugins: [
     "@tanstack/eslint-plugin-query",
     "eslint-plugin-react-you-might-not-need-an-effect",
