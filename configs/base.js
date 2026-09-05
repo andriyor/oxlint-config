@@ -36,6 +36,13 @@ export default defineConfig({
   // cannot hand oxlint the plugin object it already imported. Once plugins can
   // be passed by reference, these strings can go.
   // Watch https://github.com/oxc-project/oxc/issues/23944
+  //
+  // Every jsPlugin dependency here and in react.js declares a non-optional
+  // peer dependency on eslint, so installing this config installs eslint too —
+  // even though oxlint runs the plugins and eslint is never invoked. For the
+  // ones that only pull it in through @typescript-eslint/utils, the peer is
+  // needed for five files most plugins never touch.
+  // Watch https://github.com/typescript-eslint/typescript-eslint/issues/11939
   jsPlugins: ["@e18e/eslint-plugin"],
   // Ports of the ESLint recommended presets, whose rules oxlint files under
   // categories other than `correctness`.
